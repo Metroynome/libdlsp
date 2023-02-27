@@ -60,11 +60,6 @@
  */
 #define GAME_SCOREBOARD_ITEM_COUNT          (*(u32*)0x002F9FCC)
 
-/*
- *
- */
-#define GAME_DATA                           ((GameData*)0x0036D600)
-
 
 int isInGame(void)
 {
@@ -114,9 +109,4 @@ void gameSetDeathHeight(float height)
 int gameGetRawTimeLimit(void)
 {
     return GAME_TIME_LIMIT;
-}
-
-GameData* gameGetData(void)
-{
-    return GAME_DATA;
 }
