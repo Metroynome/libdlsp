@@ -7,7 +7,7 @@ EE_INCS += -I./include -I$(EE_SRC_DIR)
 EE_LIB = $(EE_LIB_DIR)libdlsp.a
 EE_OBJS = functions.o interop.o math.o pad.o cheats.o moby.o game.o \
 			gamesettings.o weapon.o hud.o player.o team.o math3d.o dl.o \
-			spawnpoint.o dialog.o map.o graphics.o \
+			spawnpoint.o map.o graphics.o \
 			sifrpc.o mc.o ui.o guber.o color.o \
 			music.o collision.o utils.o camera.o sound.o
 
