@@ -87,35 +87,6 @@ typedef struct ScoreboardItem
     int Value;
 } ScoreboardItem;
 
-//--------------------------------------------------------
-typedef struct GameData
-{
-    int TimeEnd;
-    int TimeStart;
-    int GameState;
-    int NumTeams;
-    int WinningTeam;
-    int WinningPlayer;
-    int BaseHoldTime;
-    int FragDisplayCount;
-    char FragMsg[0x3C];
-    int GameEndReceived;
-    int GameEndReason;
-    int GameIsOver;
-    int NumNodes;
-    int NumStartPlayers;
-    int NumStartTeams;
-    int MyTotalSquats;
-    int MyTotalTimeSquatted;
-    int MyTotalGangSquats;
-    int TeamCaptain[GAME_MAX_PLAYERS];
-    PlayerGameStats PlayerStats;
-    TeamGameStats TeamStats;
-    LocalPlayerYourBaseGameData * AllYourBaseGameData;
-    CTFGameData * CtfGameData;
-    DeathMatchGameData * DeathmatchGameData;
-} GameData;
-
 
 /*
  * NAME :		isInGame
@@ -278,22 +249,6 @@ __LIBDLSP_SETTER__ void gameSetDeathHeight(float height);
  * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
  */
 __LIBDLSP_GETTER__ int gameGetRawTimeLimit(void);
-
-/*
- * NAME :		gameGetData
- * 
- * DESCRIPTION :
- * 			Gets the game data.
- * 
- * NOTES :
- * 
- * ARGS : 
- * 
- * RETURN :
- * 
- * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
- */
-__LIBDLSP_GETTER__ GameData* gameGetData(void);
 
 /*
  * NAME :		gameScoreboardSetTeamScore
