@@ -1,5 +1,5 @@
-#ifndef _LIBDLSC_INTEROP_H_
-#define _LIBDLSC_INTEROP_H_
+#ifndef _LIBDLSP_INTEROP_H_
+#define _LIBDLSP_INTEROP_H_
 
 #include <tamtypes.h>
 
@@ -40,4 +40,4 @@ typedef union FixedAddress
 
 u32 GetAddress(VariableAddress_t* address);
 
-#endif // _CODES_INTEROP_H_
+#endif // _LIBDLSP_INTEROP_H_
