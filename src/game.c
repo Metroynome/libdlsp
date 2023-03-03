@@ -1,11 +1,14 @@
 #include "game.h"
+#include "map.h"
 
 /*
  * 
  */
 #define ACTIVE_LEVEL_ID                     (*(int*)0x0021DE10)
-#define GAME_ACTIVE                         (*(int*)0x0021E1EC)
-#define SCENE_LOADED                        (*(int*)0x0022026C)
+#define SAVE_FILE_LEVEL_ID (*(int*)0x0017197C)
+#define GAME_MISSION_AREA (*(u32*)0x001711A8)
+// #define GAME_ACTIVE                         (*(int*)0x0021E1EC)
+// #define SCENE_LOADED                        (*(int*)0x0022026C)
 
 /*
  * When non-zero start menu is open in-game.
@@ -63,12 +66,12 @@
 
 int isInGame(void)
 {
-    return GAME_ACTIVE && SCENE_LOADED == 1;
+    return ACTIVE_LEVEL_ID == SAVE_FILE_LEVEL_ID
 }
 
 int isInMenus(void)
 {
-    return ACTIVE_LEVEL_ID == 0 && SCENE_LOADED == 1;
+    return ACTIVE_LEVEL_ID == 1 && GAME_MISSION_AREA == -1;
 }
 
 int isSceneLoading(void)
