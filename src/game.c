@@ -8,7 +8,7 @@
 #define SAVE_FILE_LEVEL_ID (*(int*)0x0017197C)
 #define GAME_MISSION_AREA (*(u32*)0x001711A8)
 // #define GAME_ACTIVE                         (*(int*)0x0021E1EC)
-// #define SCENE_LOADED                        (*(int*)0x0022026C)
+#define SCENE_LOADED                        (*(int*)0x0022026C) // Not Ported
 
 /*
  * When non-zero start menu is open in-game.
@@ -66,7 +66,7 @@
 
 int isInGame(void)
 {
-    return ACTIVE_LEVEL_ID == SAVE_FILE_LEVEL_ID
+    return ACTIVE_LEVEL_ID == SAVE_FILE_LEVEL_ID;
 }
 
 int isInMenus(void)
