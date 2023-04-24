@@ -70,8 +70,9 @@ __LocalGetAddress_offsets:
     // MARAXUS = +36,
     // GHOST_STATION = +40,
     // DREADZONE_INTERIOR = +44
-	// MAIN_MENU = +48
-	.byte -1,0,4,-1,8,12,16,20,24,-1,28,32,-1,36,40,44,48;
+	// MAIN_MENU = +48 (GAME_MAP_ID = 1, MISSION_AREA = -1)
+	// MULTIPLAYER_MENU = +52 (GAME_MAP_ID = 0, MISSION_AREA = -1)
+	.byte -1,0,4,-1,8,12,16,20,24,-1,28,32,-1,36,40,44,48,52;
 
 // 
 	.set	push;
@@ -84,9 +85,19 @@ __LocalGetAddress_offsets:
 __LocalGetAddress:
 	// return address by mission
 	lw $v0, MISSION_AREA;
-	blez $v0, __LocalAddressAdd_byte;
-	addiu $v1, $zero, 48;
+	blez $v0, __LocalAddress_ByMenu;
+	nop;
+	beq $zero, $zero, __LocalAddress_ByMap;
 
+__LocalAddress_ByMenu:
+	// If GAME_MAP_ID doesn't equal zero, load 48 (MainMenu), else load 52 (MultiplayerMenu)
+	lw $v0, GAME_MAP_ID;
+	bne $v0, $zero, __LocalAddressAdd_byte;
+	addiu $v1, $zero, 48;
+	beq $v0, $zero, __LocalAddressAdd_byte;
+	addiu $v1, $zero, 52;
+
+__LocalAddress_ByMap:
 	// return address by map
 	lw $v0, GAME_MAP_ID;
 	// Exit if map is less than zero
@@ -122,10 +133,19 @@ __LocalGetAddress_exit:
 GetAddress:
 	// return address by mission
 	lw $v0, MISSION_AREA;
-	// if on main menu, add our own byte
-	blez $v0, GetAddressAdd_byte;
-	addiu $v1, $zero, 48;
+	blez $v0, GetAddress_ByMenu;
+	nop;
+	beq $zero, $zero, GetAddress_ByMap;
 
+GetAddress_ByMenu:
+	// If GAME_MAP_ID doesn't equal zero, load 48 (MainMenu), else load 52 (MultiplayerMenu)
+	lw $v0, GAME_MAP_ID;
+	bne $v0, $zero, GetAddressAdd_byte;
+	addiu $v1, $zero, 48;
+	beq $v0, $zero, GetAddressAdd_byte;
+	addiu $v1, $zero, 52;
+
+GetAddress_ByMap:
 	// return address by map
 	lw $v0, GAME_MAP_ID;
 	// Exit if map is less than zero

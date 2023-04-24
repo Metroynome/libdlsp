@@ -15,7 +15,8 @@ VariableAddress_t vaGetTextWidthFunc = {
 	.Maraxus = 0x005231E8,
 	.GhostStation = 0x0051C040,
 	.DreadZoneInterior = 0x0052DA00,
-	.MainMenu = 0x00454780
+	.MainMenu = 0x00454780,
+	.MultiplayerMenu = 0x005BDC90
 };
 
 VariableAddress_t vaDrawTextFunc = {
@@ -31,7 +32,8 @@ VariableAddress_t vaDrawTextFunc = {
 	.Maraxus = 0x005234D8,
 	.GhostStation = 0x0051C330,
 	.DreadZoneInterior = 0x0052DCF0,
-	.MainMenu = 0x00454A70
+	.MainMenu = 0x00454A70,
+	.MultiplayerMenu = 0x005BE058
 };
 
 int internal_drawFunc(u32,const char*,long,u64,u64,u64,float,float,float,float,float,float);

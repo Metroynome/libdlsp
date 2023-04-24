@@ -18,6 +18,7 @@ typedef struct VariableAddress
 	u32 GhostStation;
 	u32 DreadZoneInterior;
 	u32 MainMenu;
+	u32 MultiplayerMenu;
 } VariableAddress_t;
 
 typedef union FixedAddress
@@ -36,6 +37,7 @@ typedef union FixedAddress
 	u32 GhostStation;
 	u32 DreadZoneInterior;
 	u32 MainMenu;
+	u32 MultiplayerMenu;
 } FixedAddress_t;
 
 u32 GetAddress(VariableAddress_t* address);
