@@ -83,28 +83,35 @@ __LocalGetAddress_offsets:
 	.type	__LocalGetAddress,@function;
 	.ent	__LocalGetAddress,0;
 __LocalGetAddress:
-	// return address by mission
-	lw $v0, MISSION_AREA;
-	blez $v0, __LocalAddress_ByMenu;
+	lw $v0, GAME_MAP_ID;
+	addiu $v1, $zero, 2;
+	// if $v0 <= $v1, then you truely are on a map.
+	bge $v0, $v1, __LocalAddress_ByMap;
+	nop
+	// Is map Battledome or on Main Menu?
+	addiu $v1, $zero, 1;
+	beq $v0, $v1, __LocalAddress_ByMission
 	nop;
+
+__LocalAddress_ByMission:
+	// return address by mission
+	lw $v1, MISSION_AREA;
+	// if mission is equal or less than 0, then in menu.
+	blez $v1, __LocalAddress_ByMenu;
+	nop;
+	// else must be battledome!
 	beq $zero, $zero, __LocalAddress_ByMap;
+	nop;
 
 __LocalAddress_ByMenu:
 	// If GAME_MAP_ID doesn't equal zero, load 48 (MainMenu), else load 52 (MultiplayerMenu)
-	lw $v0, GAME_MAP_ID;
 	bne $v0, $zero, __LocalAddressAdd_byte;
 	addiu $v1, $zero, 48;
 	beq $v0, $zero, __LocalAddressAdd_byte;
 	addiu $v1, $zero, 52;
 
 __LocalAddress_ByMap:
-	// return address by map
-	lw $v0, GAME_MAP_ID;
-	// Exit if map is less than zero
-	blez $v0, __LocalGetAddress_exit;
-	nop
-
-	// load offset into VariableAddress struct by map id
+	// load offset from VariableAddress struct and add it to map id
 	la $v1, __LocalGetAddress_offsets;
 	addu $v1, $v0;
 	lb $v1, 0($v1);
@@ -131,28 +138,28 @@ __LocalGetAddress_exit:
 	.type	GetAddress,@function;
 	.ent	GetAddress,0;
 GetAddress:
-	// return address by mission
-	lw $v0, MISSION_AREA;
-	blez $v0, GetAddress_ByMenu;
-	nop;
-	beq $zero, $zero, GetAddress_ByMap;
-
-GetAddress_ByMenu:
-	// If GAME_MAP_ID doesn't equal zero, load 48 (MainMenu), else load 52 (MultiplayerMenu)
 	lw $v0, GAME_MAP_ID;
-	bne $v0, $zero, GetAddressAdd_byte;
-	addiu $v1, $zero, 48;
-	beq $v0, $zero, GetAddressAdd_byte;
-	addiu $v1, $zero, 52;
+	addiu $v1, $zero, 2;
+	// if $v0 <= $v1, then you truely are on a map.
+	bge $v0, $v1, GetAddress_ByMap;
+	nop
+	// Is map Battledome or on Main Menu?
+	addiu $v1, $zero, 1;
+	beq $v0, $v1, GetAddress_ByMission
+	nop;
+
+GetAddress_ByMission:
+	// return address by mission
+	lw $v1, MISSION_AREA;
+	// if mission is equal or less than 0, then in menu.
+	blez $v1, GetAddress_ByMenu;
+	nop;
+	// else must be battledome!
+	beq $zero, $zero, GetAddress_ByMap;
+	nop;
 
 GetAddress_ByMap:
-	// return address by map
-	lw $v0, GAME_MAP_ID;
-	// Exit if map is less than zero
-	blez $v0, GetAddress_exit;
-	nop
-
-	// load offset into VariableAddress struct by map id
+	// load offset from VariableAddress struct and add it to map id
 	la $v1, __LocalGetAddress_offsets;
 	addu $v1, $v0;
 	lb $v1, 0($v1);
@@ -220,7 +227,7 @@ FUNCTION(internal_colorLerp_inLobby, 0x005bd140) # Not Ported
 #----------------------- GRAPHICS -----------------------
 #--------------------------------------------------------
 VARIABLE_FUNCTION(internal_drawFunc, vaDrawTextFunc)
-VARIABLE_FUNCTION(gfxGetFontWidth, vaGetTextWidthFunc)
+VARIABLE_FUNCTION(internal_widthFunc, vaGetTextWidthFunc)
 
 FUNCTION(internal_drawBox_inGame, 0x005BE610) # Not Ported
 FUNCTION(internal_drawBox_inLobby, 0x00699C08) # Not Ported
