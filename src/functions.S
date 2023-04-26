@@ -158,6 +158,13 @@ GetAddress_ByMission:
 	beq $zero, $zero, GetAddress_ByMap;
 	nop;
 
+GetAddress_ByMenu:
+	// If GAME_MAP_ID doesn't equal zero, load 48 (MainMenu), else load 52 (MultiplayerMenu)
+	bne $v0, $zero, __LocalAddressAdd_byte;
+	addiu $v1, $zero, 48;
+	beq $v0, $zero, __LocalAddressAdd_byte;
+	addiu $v1, $zero, 52;
+
 GetAddress_ByMap:
 	// load offset from VariableAddress struct and add it to map id
 	la $v1, __LocalGetAddress_offsets;
