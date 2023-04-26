@@ -37,8 +37,6 @@ name:														\
 		j __LocalGetAddress;        \
 		nop;			            			\
 ##name##_return:										\
-		beq $zero, $v0, ##name##_exit;	\
-		nop;												\
 		lq $a1, 0x20($sp);					\
 		jalr $v1;										\
 		lq $a0, 0x10($sp);					\
