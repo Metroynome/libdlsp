@@ -1,13 +1,14 @@
 #include "game.h"
 #include "map.h"
+#include "ui.h"
 
 /*
  * 
  */
 #define ACTIVE_LEVEL_ID                     (*(int*)0x0021DE10)
-#define SAVE_FILE_LEVEL_ID (*(int*)0x0017197C)
-#define GAME_MISSION_AREA (*(u32*)0x001711A8)
-// #define GAME_ACTIVE                         (*(int*)0x0021E1EC)
+#define SAVE_FILE_LEVEL_ID                  (*(int*)0x0017197C)
+#define GAME_MISSION_ACTIVE                 (*(u32*)0x001711A8)
+#define GAME_ACTIVE                         (*(int*)0x0021E1EC)
 #define SCENE_LOADED                        (*(int*)0x0022026C) // Not Ported
 
 /*
@@ -66,12 +67,27 @@
 
 int isInGame(void)
 {
-    return ACTIVE_LEVEL_ID == SAVE_FILE_LEVEL_ID;
+    // my version
+    // return ACTIVE_LEVEL_ID == SAVE_FILE_LEVEL_ID;
+    // return ACTIVE_LEVEL_ID != 0 && GAME_MISSION_ACTIVE != -1;
+    // dan's version
+    // return GAME_ACTIVE && SCENE_LOADED == 1;
+    return ACTIVE_LEVEL_ID == SAVE_FILE_LEVEL_ID && GAME_MISSION_ACTIVE != -1;
 }
 
 int isInMenus(void)
 {
-    return ACTIVE_LEVEL_ID == 1 && GAME_MISSION_AREA == -1;
+    // No idea why this works.  To my understanding, it shouldn't.
+
+    // if active pointer != multiplayer menu
+    if (uiGetActivePointer() != uiGetPointer(UI_MENU_ID_ONLINE_LOCAL_EDIT_PROFILE_MENU))
+    {
+        return ACTIVE_LEVEL_ID == 0 && SCENE_LOADED == 1;
+    }
+    else
+    {
+        return ACTIVE_LEVEL_ID == 1 && GAME_MISSION_ACTIVE == -1;
+    }
 }
 
 int isSceneLoading(void)
