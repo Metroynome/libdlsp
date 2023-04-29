@@ -231,8 +231,14 @@ FUNCTION(internal_colorLerp_inLobby, 0x005bd140) # Not Ported
 #--------------------------------------------------------
 #----------------------- GRAPHICS -----------------------
 #--------------------------------------------------------
-VARIABLE_FUNCTION(internal_drawFunc, vaDrawTextFunc)
-VARIABLE_FUNCTION(gfxGetFontWidth, vaGetTextWidthFunc)
+#VARIABLE_FUNCTION(internal_drawFunc, vaDrawTextFunc)
+#VARIABLE_FUNCTION(gfxGetFontWidth, vaGetTextWidthFunc)
+
+FUNCTION(internal_drawFunc_MultiplayerMenu, 0x005BE058)
+FUNCTION(internal_drawFunc_MainMenu, 0x00454A70)
+
+FUNCTION(internal_widthFunc_MultiplayerMenu, 0x005BDC90)
+FUNCTION(internal_widthFunc_MainMenu, 0x00454780)
 
 FUNCTION(internal_drawBox_inGame, 0x005BE610) # Not Ported
 FUNCTION(internal_drawBox_inLobby, 0x00699C08) # Not Ported
