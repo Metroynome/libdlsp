@@ -1,5 +1,7 @@
 #include "ui.h"
 #include "game.h"
+#include "player.h"
+#include "utils.h"
 
 #define UI_ACTIVE_ID                            (*(int*)0x003434B8)
 #define UI_DIALOG_A0                            ((void*)0x011C7000)
@@ -9,6 +11,26 @@ int internal_uiSelectDialog(void *, const char *, const char **, int, int, int, 
 int internal_uiInputDialog(void *, const char *, char *, int, int, int, int, int, int);
 char * internal_uiMsgString_inGame(int textId);
 char * internal_uiMsgString_inLobby(int textId);
+
+void uiShowPopupFunc(int localPlayerIndex, const char * message)
+{
+    // Uses respawn timer uiShowPopup, so it takes 5 seconds for popup to disapear.  Need to fix that.
+    Player * player = (Player*)((*(u32*)0x001eeb70) - 0x2FEC);
+    PlayerVTable* vtable = playerGetVTable(player)->Update;
+    int jal1 = (u32)vtable + 0x410;
+    int jal2 = (u32)ConvertJALtoAddress(*(u32*)jal1) + 0x13E0;
+    int func = ConvertJALtoAddress(*(u32*)jal2);
+
+	((void (*)(int, const char *))func)(localPlayerIndex, message);
+}
+
+void uiShowPopup(int localPlayerIndex, const char * message)
+{
+    int (*PopupInit)(int, const char *) = NULL;
+    void *ptr = (void *)&uiShowPopupFunc;
+    PopupInit = (void (*)(int, const char *))ptr;
+    PopupInit(localPlayerIndex, message);
+}
 
 int uiGetActive(void)
 {
