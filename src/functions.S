@@ -328,8 +328,10 @@ FUNCTION(weaponTurnOffHoloshields, 0x005a3940)
 FUNCTION(internal_uiDialog, 0x00719A28) # Not Ported
 FUNCTION(internal_uiSelectDialog, 0x00719C68) # Not Ported
 FUNCTION(internal_uiInputDialog, 0x00719B80) # Not Ported
-FUNCTION(uiShowPopup, 0x00540170) # Not Ported
+
+#FUNCTION(uiShowPopup, 0x00540170) # Not Ported
 FUNCTION(uiShowHelpPopup, 0x00540140) # Not Ported
+
 FUNCTION(internal_uiMsgString_inGame,  0x004E4180) # Not Ported
 FUNCTION(internal_uiMsgString_inLobby,  0x005c9f50) # Not Ported
 FUNCTION(uiShowTimer, 0x005401E8) # Not Ported

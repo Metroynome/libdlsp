@@ -253,6 +253,7 @@ int uiShowInputDialog(const char * title, char * value, int maxLength);
  * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
  */
 void uiShowPopup(int localPlayerIndex, const char * message);
+void uiShowPopupFunc(int localPlayerIndex, const char * message);
 
 /*
  * NAME :		uiShowHelpPopup
