@@ -138,6 +138,8 @@ typedef struct UiMenu
     UiElement_t* Children[64];
 } UiMenu_t;
 
+int uiGetAddressByOffset(int Offset);
+
 /*
  * NAME :		uiChangeMenu
  * 
@@ -253,7 +255,6 @@ int uiShowInputDialog(const char * title, char * value, int maxLength);
  * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
  */
 void uiShowPopup(int localPlayerIndex, const char * message);
-void uiShowPopupFunc(int localPlayerIndex, const char * message);
 
 /*
  * NAME :		uiShowHelpPopup
@@ -273,6 +274,26 @@ void uiShowPopupFunc(int localPlayerIndex, const char * message);
  * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
  */
 void uiShowHelpPopup(int localPlayerIndex, const char * message, int seconds);
+void uiShowHelpPopupByTextID(int localPlayerIndex, int textId);
+
+/*
+ * NAME :		uiPrintAmmoPickup
+ * 
+ * DESCRIPTION :
+ * 			Shows a popup (bottom of screen) with the given text ID to the given local player.  amount is optional.
+ * 
+ * NOTES :
+ * 
+ * ARGS : 
+ *      localPlayerIndex    :               Local player to show popup for.
+ *      textId              :               text ID message to show.
+ *      amount              :               how much of something the player got.
+ * 
+ * RETURN :
+ * 
+ * AUTHOR :			Troy "Agent Moose" Pruitt
+ */
+void uiPrintAmmoPickup(int localPlayerIndex, int textId);
 
 /*
  * NAME :		uiShowTimer
@@ -291,7 +312,7 @@ void uiShowHelpPopup(int localPlayerIndex, const char * message, int seconds);
  * 
  * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
  */
-void uiShowTimer(int localPlayerIndex, const char * message, long timeMs);
+// void uiShowTimer(const char * message, long timeMs);
 
 /*
  * NAME :		uiMsgString
@@ -308,6 +329,7 @@ void uiShowTimer(int localPlayerIndex, const char * message, long timeMs);
  * 
  * AUTHOR :			Daniel "Dnawrkshp" Gerendasy
  */
+void msg_string(int textId);
 char * uiMsgString(int textId);
 
 

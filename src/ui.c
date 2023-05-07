@@ -1,5 +1,4 @@
 #include "ui.h"
-#include "game.h"
 #include "player.h"
 #include "utils.h"
 
@@ -9,27 +8,49 @@
 int internal_uiDialog(void *, const char *, const char *, int, int, int, int);
 int internal_uiSelectDialog(void *, const char *, const char **, int, int, int, int);
 int internal_uiInputDialog(void *, const char *, char *, int, int, int, int, int, int);
-char * internal_uiMsgString_inGame(int textId);
-char * internal_uiMsgString_inLobby(int textId);
 
-void uiShowPopupFunc(int localPlayerIndex, const char * message)
+int uiGetAddressByOffset(int Offset)
 {
-    // Uses respawn timer uiShowPopup, so it takes 5 seconds for popup to disapear.  Need to fix that.
-    Player * player = (Player*)((*(u32*)0x001eeb70) - 0x2FEC);
-    PlayerVTable* vtable = playerGetVTable(player)->Update;
+    int HeroStruct = *(u32*)0x001eeb70;
+    if (HeroStruct == 0)
+        return;
+
+    Player * player = (Player*)((u32)HeroStruct - 0x2FEC);
+    PlayerVTable * vtable = playerGetVTable(player)->Update;
     int jal1 = (u32)vtable + 0x410;
     int jal2 = (u32)ConvertJALtoAddress(*(u32*)jal1) + 0x13E0;
-    int func = ConvertJALtoAddress(*(u32*)jal2);
+    int func = (u32)ConvertJALtoAddress(*(u32*)jal2) + Offset;
+}
 
-	((void (*)(int, const char *))func)(localPlayerIndex, message);
+void uiShowHelpPopup(int localPlayerIndex, const char * message, int seconds)
+{
+     // Catacrom: 0x00587D10
+    int func = uiGetAddressByOffset(-0x80);
+	((void (*)(int, const char *, int))func)(localPlayerIndex, message, seconds);
 }
 
 void uiShowPopup(int localPlayerIndex, const char * message)
 {
-    int (*PopupInit)(int, const char *) = NULL;
-    void *ptr = (void *)&uiShowPopupFunc;
-    PopupInit = (void (*)(int, const char *))ptr;
-    PopupInit(localPlayerIndex, message);
+    int GUI_PrintPrompt = uiGetAddressByOffset(0);
+	((void (*)(int, const char *))GUI_PrintPrompt)(localPlayerIndex, message);
+}
+
+void uiShowHelpPopupByTextID(int localPlayerIndex, int textId)
+{
+    int func = uiGetAddressByOffset(0x20);
+	((void (*)(int, int))func)(localPlayerIndex, textId);
+}
+
+void uiPrintAmmoPickup(int localPlayerIndex, int textId)
+{
+    int func = uiGetAddressByOffset(0x58);
+     // Catacrom: 0x00587DE8
+	((void (*)(int, int))func)(localPlayerIndex, textId);
+}
+
+void uiShowTimer(int localPlayerIndex, int textId)
+{
+    // Still can't find this.
 }
 
 int uiGetActive(void)
@@ -57,12 +78,27 @@ int uiShowInputDialog(const char * title, char * value, int maxLength)
     return internal_uiInputDialog(UI_DIALOG_A0, title, value, 0, maxLength, 0, 0, 0, 0);
 }
 
+void msg_string(int textId)
+{
+    int jal3 = uiGetAddressByOffset(0x30);
+    int msg_stringFunc = ConvertJALtoAddress(*(u32*)jal3);
+    ((void (*)(int))msg_stringFunc)(textId);
+}
+
 char * uiMsgString(int textId)
 {
     if (isInGame())
-        return internal_uiMsgString_inGame(textId);
-    else if (isInMenus())
-        return internal_uiMsgString_inLobby(textId);
+    {
+        int (*msg_stringInit)(int) = NULL;
+        void *ptr = (void *)&msg_string;
+        msg_stringInit = (void (*)(int))ptr;
+
+        msg_stringInit(textId);
+    }
+    // else if (isInMenus())
+    // {
+    //     return internal_uiMsgString_inLobby(textId);
+    // }
 
     return NULL;
 }
