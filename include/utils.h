@@ -87,22 +87,4 @@ int isInIopMemory(void* p);
  */
 int ConvertJALtoAddress(int instruction);
 
-/*
- * NAME :		GetAddressByOffset
- * 
- * DESCRIPTION :
- * 			Returns an Address given the Offset
- *          Calculated by: "internal_widthFunc" address plus Offset.
- * 
- * NOTES :
- * 
- * ARGS : 
- *          Offset     :           Offset from "internal_widthFunc" address
- * 
- * RETURN :
- * 
- * AUTHOR :			Troy "Agent Moose" Pruitt
- */
-int GetAddressByOffset(int Offset);
-
 #endif // _LIBDLSP_UTILS_H_

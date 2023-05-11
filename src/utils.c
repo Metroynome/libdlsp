@@ -28,14 +28,3 @@ int ConvertJALtoAddress(int instruction)
 {
 	return ((instruction & 0x03FFFFFF) << 2);
 }
-
-int GetAddressByOffset(int Offset)
-{
-	int player = *(u32*)0x001eeb70;
-	int hudptr = *(u32*)(player - 0x67b4);
-	int ptr = *(u32*)(hudptr + 0x28);
-	int ptr1 = *(u32*)(ptr + 0x80);
-	int jal1 = ConvertJALtoAddress(*(u32*)(ptr1 + 0x170));
-	int jal2 = ConvertJALtoAddress(*(u32*)(jal1 + 0x8));
-	return jal2 + Offset;
-}

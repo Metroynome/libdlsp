@@ -38,15 +38,26 @@
 // 	.MultiplayerMenu = 0x005BE058
 // };
 
+int gfxGetAddressByOffset(int Offset)
+{
+	int player = *(u32*)0x001eeb70;
+	int hudptr = *(u32*)(player - 0x67b4);
+	int ptr = *(u32*)(hudptr + 0x28);
+	int ptr1 = *(u32*)(ptr + 0x80);
+	int jal1 = ConvertJALtoAddress(*(u32*)(ptr1 + 0x170));
+	int jal2 = ConvertJALtoAddress(*(u32*)(jal1 + 0x8));
+	return jal2 + Offset;
+}
+
 int drawFunc(u32 color, const char * string, int length, int alignment, float x, float y, float scaleX, float scaleY)
 {
-	int draw = GetAddressByOffset(0x2f0);
+	int draw = gfxGetAddressByOffset(0x2f0);
 	((void (*)(u32,const char*,long,u64,u64,u64,float,float,float,float,float,float))draw)(color, string, length, alignment, 0, 0x80000000, x, y, scaleX, scaleY, 0, 0);
 }
 
 int widthFunc(const char * string, int length, float scale)
 {
-	int width = GetAddressByOffset(0);
+	int width = gfxGetAddressByOffset(0);
 	((void (*)(const char *, int, float))width)(string, length, scale);
 }
 

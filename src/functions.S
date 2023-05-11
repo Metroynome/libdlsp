@@ -234,6 +234,9 @@ FUNCTION(internal_colorLerp_inLobby, 0x005bd140) # Not Ported
 #VARIABLE_FUNCTION(internal_drawFunc, vaDrawTextFunc)
 #VARIABLE_FUNCTION(gfxGetFontWidth, vaGetTextWidthFunc)
 
+FUNCTION(EnableFontColors_Multiplayer, 0x005C07C8)
+FUNCTION(DisableFontColors_Multiplayer, 0x005C07E8)
+
 FUNCTION(internal_drawFunc_MultiplayerMenu, 0x005BE058)
 FUNCTION(internal_drawFunc_MainMenu, 0x00454A70)
 
