@@ -1,10 +1,29 @@
 #include "map.h"
+#include "interop.h"
 
 #define CURRENT_LEVEL (*(int*)0x0021DE10)
 #define MISSION_AREA (0x001711A8)
 #define SAVE_FILE_CURRENT_LEVEL (0x0017197C)
 
 MISSIONLOAD * Mission = (MISSIONLOAD*)MISSION_AREA;
+
+//--------------------------------------------------------
+VariableAddress_t vaSwitchToLevelFunc = {
+    .Battledome = 0x005687B0,
+    .Catacrom = 0,
+    .Sarathos = 0,
+    .Kronos = 0,
+    .Shaar = 0,
+    .Valix = 0,
+    .Orxon = 0,
+    .Torval = 0,
+    .Stygia = 0,
+    .Maraxus = 0,
+    .GhostStation = 0,
+    .DreadZoneInterior = 0,
+    .MainMenu = 0,
+    .MultiplayerMenu = 0
+};
 
 //--------------------------------------------------------
 int mapMaskHasMask(int value, int maskValue)
@@ -67,5 +86,10 @@ int mapGetActiveMission(void)
 void mapResetMission(void)
 {
     Mission->ResetLevel = 1;
+}
+
+void mapSwitchToLevel(int Level, int Mission)
+{
+    internal_mapSwitchToLevel(Level, 1, Mission);
 }
 

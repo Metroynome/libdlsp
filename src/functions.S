@@ -429,3 +429,8 @@ FUNCTION(randRange, 0x00500748)
 FUNCTION(randRangeNeg, 0x005007a0)
 FUNCTION(randRangeInt, 0x00500700)
 FUNCTION(randRadian, 0x00500800)
+
+#--------------------------------------------------------
+#-------------------------- MAP -------------------------
+#--------------------------------------------------------
+VARIABLE_FUNCTION(internal_SwitchToLevel, vaSwitchToLevelFunc)
