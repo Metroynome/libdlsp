@@ -90,7 +90,6 @@ typedef struct
 int mapMaskHasMask(int value, int maskValue);
 int mapIdToMask(int mapId);
 int mapMaskToId(int mapMask);
-void mapSwitchToLevel(int Level, int Mission);
 
 /*
  * NAME:		levelIsActiveLevel
@@ -134,6 +133,6 @@ void mapResetMission(void);
  * RETURN:
  * AUTHOR: Troy "Agent Moose" Pruitt
  */
-void mapSwitchToLevel(int Level, int Mission)
+void mapSwitchToLevel(int Level, int Mission);
 
 #endif // _LIBDLSP_MAP_H_
